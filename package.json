@@ -1,0 +1,65 @@
+{
+  "name": "@smbc/devextreme-theme",
+  "version": "0.1.0",
+  "description": "Internal SMBC DevExtreme theme, semantic tokens and corporate assets",
+  "private": false,
+  "type": "module",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./devextreme.css": "./dist/dx.smbc.css",
+    "./overrides.css": "./dist/overrides.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./viz": {
+      "types": "./dist/viz.d.ts",
+      "import": "./dist/viz.js"
+    },
+    "./assets": {
+      "types": "./dist/assets.d.ts",
+      "import": "./dist/assets.js"
+    },
+    "./assets/smbc-logo.svg": "./dist/assets/smbc-logo.svg",
+    "./assets/favicon.ico": "./dist/assets/favicon.ico"
+  },
+  "scripts": {
+    "theme:build": "node scripts/sync-devextreme-theme.mjs && node scripts/build-theme.mjs",
+    "build": "npm run theme:build && node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "prepack": "npm run build",
+    "pack:check": "npm run build && node scripts/pack-check.mjs",
+    "prepublishOnly": "node scripts/check-publish.mjs",
+    "test:package": "npm run build && node scripts/test-theme-package.mjs",
+    "test": "npm run test:package"
+  },
+  "peerDependencies": {
+    "devextreme": "~26.1.4"
+  },
+  "devDependencies": {
+    "devextreme": "26.1.4",
+    "devextreme-themebuilder": "26.1.4",
+    "devextreme-cli": "1.17.0",
+    "typescript": "6.0.2",
+    "vite": "8.2.2"
+  },
+  "imports": {
+    "#palette": {
+      "types": "devextreme/viz/palette",
+      "browser": "devextreme/viz/palette",
+      "default": "devextreme/cjs/viz/palette.js"
+    }
+  }
+}
