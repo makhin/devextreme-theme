@@ -121,16 +121,15 @@ Install and validate from this directory:
 
 ```sh
 npm ci
-npm run theme:build
-npm run typecheck
-npm run build
-npm run pack:check
-npm run test:package
+npm run check
 ```
 
 Use Node 22.12+ and npm 10+ for the development toolchain. `package-lock.json`
 pins this project's dependencies; no sibling repository or npm workspace is
-required. `npm test` runs the installed-tarball integration test (Node and Vite).
+required. `npm test` runs the same checks: token unit tests, one build (including
+TypeScript checking), the tarball allowlist check, and installed-tarball integration tests
+(Node and Vite). `npm run typecheck`, `npm run pack:check`, and
+`npm run test:package` remain available for focused validation.
 
 Source layout:
 
@@ -152,8 +151,9 @@ tokens.css → metadata synchronization → DevExtreme ThemeBuilder
 ```
 
 **Never manually edit `src/dx.smbc.css`.** Commit the regenerated CSS and metadata.
-The synchronization script resolves token aliases and rejects missing or cyclic
-references. `theme/smbc-theme.metadata.json` sets package-relative icon URLs;
+The synchronization script generates all metadata items from the token mapping,
+resolves token aliases, and rejects missing or cyclic references.
+`theme/smbc-theme.metadata.json` sets package-relative icon URLs;
 the build copies DevExtreme's matching Fluent icon fonts alongside corporate
 assets. No paths depend on the consuming application's `node_modules` layout.
 

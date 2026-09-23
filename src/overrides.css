@@ -73,21 +73,13 @@
   color: var(--color-text-inverse);
 }
 
-.dx-button-mode-contained.dx-button-default.dx-state-hover {
-  background: var(--color-action-primary-hover);
-  border-color: var(--color-action-primary-hover);
-}
-
+.dx-button-mode-contained.dx-button-default.dx-state-hover,
 .dx-button-mode-contained.dx-button-default.dx-state-focused {
   background: var(--color-action-primary-hover);
   border-color: var(--color-action-primary-hover);
 }
 
-.dx-button-mode-contained.dx-button-default.dx-state-active {
-  background: var(--color-action-primary-active);
-  border-color: var(--color-action-primary-active);
-}
-
+.dx-button-mode-contained.dx-button-default.dx-state-active,
 .dx-button-mode-contained.dx-button-default.dx-state-selected {
   background: var(--color-action-primary-active);
   border-color: var(--color-action-primary-active);
@@ -254,8 +246,6 @@
   background: var(--color-surface-hover);
 }
 
-.dx-datagrid-rowsview .dx-selection.dx-row > td,
-.dx-treelist-rowsview .dx-selection.dx-row > td,
 .dx-datagrid-rowsview .dx-row.dx-selection > td,
 .dx-treelist-rowsview .dx-row.dx-selection > td {
   background: var(--color-surface-selected);
@@ -381,39 +371,6 @@
   color: var(--color-text-primary);
 }
 
-.dx-toolbar-menu-section
-  .dx-toolbar-hidden-button
-  .dx-button-default:is(.dx-state-hover, .dx-state-focused) {
-  background: var(--color-surface-hover);
-  color: var(--color-action-primary-hover);
-}
-
-.dx-toolbar-menu-section
-  .dx-toolbar-hidden-button
-  .dx-button-default.dx-state-selected {
-  background: var(--color-surface-selected);
-  color: var(--color-action-primary);
-}
-
-.dx-toolbar-menu-section
-  .dx-toolbar-hidden-button
-  .dx-button-default.dx-state-active {
-  background: var(--color-action-primary-muted);
-  color: var(--color-action-primary-active);
-}
-
-.dx-toolbar-menu-section
-  .dx-toolbar-hidden-button
-  .dx-button-default:is(
-    .dx-state-hover,
-    .dx-state-focused,
-    .dx-state-selected,
-    .dx-state-active
-  )
-  .dx-icon {
-  color: inherit;
-}
-
 /* Calendar */
 .dx-calendar-cell.dx-calendar-selected-date,
 .dx-calendar-cell.dx-calendar-selected-date.dx-state-hover {
@@ -499,7 +456,10 @@
   font-weight: var(--font-weight-bold);
 }
 
-/* Scheduler's compact appointment toolbar bypasses the regular button modes. */
+/* Toolbar overflow and scheduler appointment buttons share contextual state styles. */
+.dx-toolbar-menu-section
+  .dx-toolbar-hidden-button
+  .dx-button-default:is(.dx-state-hover, .dx-state-focused),
 .dx-popup-content
   .dx-scheduler-dropdown-appointment-buttons-block
   .dx-button:is(.dx-state-hover, .dx-state-focused) {
@@ -507,6 +467,9 @@
   color: var(--color-action-primary-hover);
 }
 
+.dx-toolbar-menu-section
+  .dx-toolbar-hidden-button
+  .dx-button-default.dx-state-selected,
 .dx-popup-content
   .dx-scheduler-dropdown-appointment-buttons-block
   .dx-button.dx-state-selected {
@@ -514,6 +477,9 @@
   color: var(--color-action-primary);
 }
 
+.dx-toolbar-menu-section
+  .dx-toolbar-hidden-button
+  .dx-button-default.dx-state-active,
 .dx-popup-content
   .dx-scheduler-dropdown-appointment-buttons-block
   .dx-button.dx-state-active {
@@ -521,6 +487,15 @@
   color: var(--color-action-primary-active);
 }
 
+.dx-toolbar-menu-section
+  .dx-toolbar-hidden-button
+  .dx-button-default:is(
+    .dx-state-hover,
+    .dx-state-focused,
+    .dx-state-selected,
+    .dx-state-active
+  )
+  .dx-icon,
 .dx-popup-content
   .dx-scheduler-dropdown-appointment-buttons-block
   .dx-button:is(

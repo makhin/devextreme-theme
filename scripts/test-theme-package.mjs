@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,30 +9,6 @@ import { build } from 'vite';
 const packageRoot = fileURLToPath(new URL('../', import.meta.url));
 const temp = await mkdtemp(join(tmpdir(), 'smbc-package-test-'));
 try {
-  // Exercise synchronization against isolated source fixtures, never live tokens.
-  const source = join(temp, 'source');
-  for (const folder of ['src', 'theme', 'scripts', 'node_modules/devextreme-themebuilder']) {
-    await mkdir(join(source, folder), { recursive: true });
-  }
-  await cp(join(packageRoot, 'scripts/sync-devextreme-theme.mjs'), join(source, 'scripts/sync-devextreme-theme.mjs'));
-  await cp(join(packageRoot, 'theme/smbc-theme.metadata.json'), join(source, 'theme/smbc-theme.metadata.json'));
-  await writeFile(join(source, 'node_modules/devextreme-themebuilder/package.json'), JSON.stringify({ version: '26.1.4' }));
-  const tokens = await readFile(join(packageRoot, 'src/tokens.css'), 'utf8');
-  for (const [value, error] of [
-    ['var(--missing-test-token)', /Missing required design token: --missing-test-token/],
-    ['var(--color-action-primary)', /Circular design token reference/],
-    ['#123456', null],
-  ]) {
-    await writeFile(join(source, 'src/tokens.css'), tokens.replace(/--color-action-primary:[^;]+;/, `--color-action-primary: ${value};`));
-    const sync = () => execFileSync(process.execPath, ['scripts/sync-devextreme-theme.mjs'], { cwd: source, stdio: 'pipe' });
-    if (error) assert.throws(sync, error);
-    else {
-      sync();
-      const metadata = JSON.parse(await readFile(join(source, 'theme/smbc-theme.metadata.json'), 'utf8'));
-      assert.equal(metadata.items.find(item => item.key === '$base-accent').value, '#123456');
-    }
-  }
-  console.log('Metadata synchronization: token propagation, missing references and cycles passed.');
   const [pack] = JSON.parse(execFileSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', temp], {
     cwd: packageRoot, encoding: 'utf8',
   }));

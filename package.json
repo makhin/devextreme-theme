@@ -43,7 +43,9 @@
     "pack:check": "npm run build && node scripts/pack-check.mjs",
     "prepublishOnly": "node scripts/check-publish.mjs",
     "test:package": "npm run build && node scripts/test-theme-package.mjs",
-    "test": "npm run test:package"
+    "test": "npm run check",
+    "test:tokens": "node --test scripts/theme-metadata.test.mjs",
+    "check": "npm run test:tokens && npm run build && node scripts/pack-check.mjs && node scripts/test-theme-package.mjs"
   },
   "peerDependencies": {
     "devextreme": "~26.1.4"
@@ -51,7 +53,6 @@
   "devDependencies": {
     "devextreme": "26.1.4",
     "devextreme-themebuilder": "26.1.4",
-    "devextreme-cli": "1.17.0",
     "typescript": "6.0.2",
     "vite": "8.2.2"
   },

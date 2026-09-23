@@ -133,6 +133,30 @@
       "value": "#f2f6da"
     },
     {
+      "key": "$tagbox-tag-color",
+      "value": "#1f2522"
+    },
+    {
+      "key": "$tagbox-tag-bg",
+      "value": "#f1f5f2"
+    },
+    {
+      "key": "$tagbox-tag-active-color",
+      "value": "#1f2522"
+    },
+    {
+      "key": "$tagbox-tag-button-remove-bg",
+      "value": "#68716c"
+    },
+    {
+      "key": "$accordion-title-color",
+      "value": "#1f2522"
+    },
+    {
+      "key": "$fluent-accordion-title-font-size",
+      "value": "13px"
+    },
+    {
       "key": "$pagination-page-selected-color",
       "value": "#ffffff"
     },
@@ -143,6 +167,10 @@
     {
       "key": "$load-indicator-segment-bg-color",
       "value": "#004831"
+    },
+    {
+      "key": "$load-indicator-inner-segment-border-color",
+      "value": "#d8ddd9"
     },
     {
       "key": "$progressbar-range-bg",
@@ -203,34 +231,6 @@
     {
       "key": "$scheduler-workspace-focused-cell-color",
       "value": "#f2f6da"
-    },
-    {
-      "key": "$load-indicator-inner-segment-border-color",
-      "value": "#d8ddd9"
-    },
-    {
-      "key": "$tagbox-tag-color",
-      "value": "#1f2522"
-    },
-    {
-      "key": "$tagbox-tag-bg",
-      "value": "#f1f5f2"
-    },
-    {
-      "key": "$tagbox-tag-active-color",
-      "value": "#1f2522"
-    },
-    {
-      "key": "$tagbox-tag-button-remove-bg",
-      "value": "#68716c"
-    },
-    {
-      "key": "$accordion-title-color",
-      "value": "#1f2522"
-    },
-    {
-      "key": "$fluent-accordion-title-font-size",
-      "value": "13px"
     }
   ],
   "baseTheme": "fluent.blue.light.compact",
