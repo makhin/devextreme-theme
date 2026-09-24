@@ -68,9 +68,15 @@ import faviconUrl from '@smbc/devextreme-theme/assets/favicon.ico';
 
 No manually copied public-directory assets are needed. For a static HTML-only
 pipeline, copy the exported favicon during the build, not into the application's
-source repository.
+source tree.
 
-## Charts
+## Optional visualization palette
+
+This is a framework-independent theme API. `smbc-style` does not render charts
+or register this palette. The snippet below describes palette integration for
+a chart implementation; it does not authorize direct vendor imports in an
+application using the `@smbc/ui` boundary. Such applications need a shared chart
+API before adding chart controls.
 
 Load the CSS before calling the registration function in a browser:
 
@@ -125,7 +131,7 @@ npm run check
 ```
 
 Use Node 22.12+ and npm 10+ for the development toolchain. `package-lock.json`
-pins this project's dependencies; no sibling repository or npm workspace is
+pins this project's dependencies; no sibling project or npm workspace is
 required. `npm test` runs the same checks: token unit tests, one build (including
 TypeScript checking), the tarball allowlist check, and installed-tarball integration tests
 (Node and Vite). `npm run typecheck`, `npm run pack:check`, and
