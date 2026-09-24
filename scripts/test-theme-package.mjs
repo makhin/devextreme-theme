@@ -5,15 +5,16 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'vite';
+import { runNpm } from './run-npm.mjs';
 
 const packageRoot = fileURLToPath(new URL('../', import.meta.url));
 const temp = await mkdtemp(join(tmpdir(), 'smbc-package-test-'));
 try {
-  const [pack] = JSON.parse(execFileSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', temp], {
+  const [pack] = JSON.parse(runNpm(['pack', '--ignore-scripts', '--json', '--pack-destination', temp], {
     cwd: packageRoot, encoding: 'utf8',
   }));
   await writeFile(join(temp, 'package.json'), JSON.stringify({ private: true, type: 'module' }));
-  execFileSync('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', join(temp, pack.filename), 'devextreme@26.1.4'], {
+  runNpm(['install', '--ignore-scripts', '--no-audit', '--no-fund', join(temp, pack.filename), 'devextreme@26.1.4'], {
     cwd: temp, stdio: 'inherit',
   });
   await writeFile(join(temp, 'node-check.mjs'), `

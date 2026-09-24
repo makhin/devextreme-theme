@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { runNpm } from './run-npm.mjs';
 import { readFile, access } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const root = new URL('../', import.meta.url);
 const manifest = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
-const [pack] = JSON.parse(execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
+const [pack] = JSON.parse(runNpm(['pack', '--dry-run', '--json', '--ignore-scripts'], {
   cwd: fileURLToPath(root), encoding: 'utf8',
 }));
 const actual = pack.files.map(({ path }) => path).sort();
