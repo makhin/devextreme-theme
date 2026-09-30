@@ -37,7 +37,7 @@
     "./tailwind.css": "./dist/tailwind.css"
   },
   "scripts": {
-    "theme:build": "node scripts/sync-devextreme-theme.mjs && node scripts/build-theme.mjs",
+    "theme:build": "node scripts/build-theme.mjs",
     "build": "npm run theme:build && node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
     "prepack": "npm run build",

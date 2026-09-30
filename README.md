@@ -230,3 +230,15 @@ the public npm registry. Configure `@smbc:registry` for the approved destination
 and publish from this package directory. Do not override access to public,
 disable lifecycle scripts, or publish a tarball directly: those bypass the source
 hook. Registry ACLs must also restrict publication. Creating or building this project does not publish the package.
+
+### One theme-generation step
+
+`npm run theme:build` reads canonical `src/tokens.css`, synchronizes ThemeBuilder
+metadata and generates `src/dx.smbc.css` in one script. There is no separate sync
+command to remember. Generated metadata/CSS remain checked in; never edit the
+CSS manually. `npm run build` also compiles package code and copies assets.
+
+For the complete local consumer flow, run `npm run refresh:packages` from
+`../smbc-style`. It checks this package, packs the checked output, updates UI,
+and then validates the reference app against both fresh archives. The three
+repositories remain independently installable and buildable.
