@@ -25,12 +25,13 @@ import '@smbc/devextreme-theme/styles.css';
 This loads local fonts, semantic tokens, generated DevExtreme CSS, and corporate
 overrides, in that order. Do not also load a stock DevExtreme theme. Keep
 `class="dx-viewport"` on the application's body or themed container.
-Application layouts, document resets, `.app-*` patterns and navigation are owned
-by the consumer. The `smbc-style` demo retains its application CSS before the theme to
-preserve its existing cascade.
+Application composition, document baseline and navigation are consumer-owned.
+The `smbc-style` demo uses explicit CSS layers to preserve compact vendor
+typography while allowing application utilities to style native elements.
 
 Advanced CSS entry points: `tokens.css`, `fonts.css`, `devextreme.css`, and
-`overrides.css`. Most applications need only `styles.css`.
+`overrides.css`, and the compile-time `tailwind.css` bridge. Applications without
+Tailwind need only `styles.css`.
 
 ## Logo and favicon
 
@@ -119,6 +120,50 @@ Existing custom property names are preserved. Prefer semantic roles:
   border-color: var(--color-border-default);
 }
 ```
+
+## Tailwind v4 bridge
+
+`@smbc/devextreme-theme/tailwind.css` exports CSS-first `@theme inline` aliases
+for Tailwind **v4**. It introduces no Tailwind runtime, package dependency,
+Preflight, source scan, or new visual values. `src/tokens.css` remains the
+canonical source; the bridge only names semantic utilities over its variables.
+Load `styles.css` for the actual values and corporate assets.
+
+In a Tailwind application, after importing Tailwind's theme and utilities:
+
+```css
+@reference "@smbc/devextreme-theme/tailwind.css";
+```
+
+`@reference` supplies compile-time definitions without emitting another runtime
+token block. This matters where an alias shares a name with a canonical variable
+(e.g. `surface-subtle`), and keeps ownership in `tokens.css`. Do not import the
+bridge as browser CSS or replace canonical tokens with a Tailwind configuration.
+See [the reference application's entrypoint](../smbc-style/src/styles/app.css)
+for the complete no-Preflight Vite setup and tested layer order.
+
+| Semantic utilities | Canonical roles |
+| --- | --- |
+| `bg-primary`, `hover:bg-primary-hover`, `bg-accent` | Action colours |
+| `bg-page`, `bg-surface`, `bg-surface-alt`, `bg-surface-subtle`, `bg-surface-hover`, `bg-surface-selected` | Page and surface colours |
+| `text-fg`, `text-fg-muted`, `text-fg-inverse`, `text-link` | Text colours |
+| `border-border`, `border-border-strong`, `border-border-control` | Border colours |
+| `text-success`, `text-warning`, `text-danger`, `text-info`; corresponding `bg-*-subtle` | Feedback roles |
+| `bg-header`, `border-header-border`, `text-nav-text`, `bg-nav-hover` | Header/navigation roles |
+| `font-body`, `font-brand`, `text-xs` through `text-3xl`, `leading-tight`, `leading-normal` | Corporate typography |
+| `rounded-control`, `rounded-card`, `rounded-panel`, `rounded-badge` | Canonical radii (`badge` avoids a self-referential pill alias) |
+| `shadow-card-elevation`, `shadow-popup-elevation` | Canonical elevation |
+| `gap-4`, `p-4`, `mt-2` | Multiples of canonical `--space-1` (4px scale) |
+
+The default Tailwind colour, font, text-size, radius and shadow namespaces are
+cleared; developers choose semantic roles rather than `green-700`/`emerald-800`.
+Transparent/current-colour utilities remain available. Standard Tailwind
+breakpoints remain layout tools; the bridge does not own application geometry.
+Font weights also resolve through canonical variables rather than Tailwind defaults.
+
+Package checks verify that every alias targets an existing canonical token and
+that the export is present in the installed archive. The UI and reference
+application compile this export with Tailwind 4.3.3.
 
 ## Theme development
 

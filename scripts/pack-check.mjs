@@ -12,7 +12,7 @@ const actual = pack.files.map(({ path }) => path).sort();
 const expected = [
   'package.json', 'README.md',
   ...['index', 'viz', 'assets'].flatMap(name => [`dist/${name}.js`, `dist/${name}.d.ts`]),
-  ...['styles', 'tokens', 'fonts', 'dx.smbc', 'overrides'].map(name => `dist/${name}.css`),
+  ...['styles', 'tokens', 'fonts', 'dx.smbc', 'overrides', 'tailwind'].map(name => `dist/${name}.css`),
   'dist/assets/smbc-logo.svg', 'dist/assets/favicon.ico',
   ...['myriad-pro-light', 'myriad-pro-regular', 'myriad-pro-bold', 'capitolium-2-bold'].map(name => `dist/assets/fonts/${name}.woff2`),
   ...['woff2', 'woff', 'ttf'].map(ext => `dist/assets/icons/dxiconsfluent.${ext}`),

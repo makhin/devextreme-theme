@@ -24,6 +24,7 @@ const { getPalette } = await import('devextreme/cjs/viz/palette.js');
 const originalPalette = structuredClone(getPalette('SMBC'));
 Object.defineProperty(globalThis, 'document', { configurable: true, get() { throw new Error('DOM accessed on import'); } });
 await import('@smbc/devextreme-theme');
+await access(new URL(import.meta.resolve('@smbc/devextreme-theme/tailwind.css')));
 const { smbcLogoUrl, smbcFaviconUrl } = await import('@smbc/devextreme-theme/assets');
 const { registerSmbcVizPalette, SMBC_VIZ_PALETTE_NAME } = await import('@smbc/devextreme-theme/viz');
 assert.deepEqual(getPalette('SMBC'), originalPalette, 'Import must not register a palette');

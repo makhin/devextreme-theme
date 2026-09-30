@@ -1,0 +1,82 @@
+/* Tailwind v4 compile-time aliases. Load styles.css for the canonical values.
+ * Use @reference after Tailwind theme.css; this file supplies no runtime/reset.
+ * Palette choices are deliberately unavailable: use semantic SMBC roles.
+ */
+@theme inline {
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+
+  --color-primary: var(--color-action-primary);
+  --color-primary-hover: var(--color-action-primary-hover);
+  --color-primary-active: var(--color-action-primary-active);
+  --color-accent: var(--color-action-accent);
+  --color-page: var(--color-page-background);
+  --color-surface: var(--color-surface-default);
+  --color-surface-alt: var(--color-surface-alternate);
+  --color-surface-subtle: var(--color-surface-subtle);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-surface-selected: var(--color-surface-selected);
+  --color-surface-sticky: var(--color-surface-sticky);
+  --color-fg: var(--color-text-primary);
+  --color-fg-muted: var(--color-text-secondary);
+  --color-fg-inverse: var(--color-text-inverse);
+  --color-link: var(--color-text-link);
+  --color-border: var(--color-border-default);
+  --color-border-strong: var(--color-border-strong);
+  --color-border-control: var(--color-border-control);
+  --color-border-inverse: var(--color-border-inverse);
+  --color-border-inverse-subtle: var(--color-border-inverse-subtle);
+  --color-success: var(--color-feedback-success);
+  --color-success-subtle: var(--color-feedback-success-subtle);
+  --color-warning: var(--color-feedback-warning);
+  --color-warning-subtle: var(--color-feedback-warning-subtle);
+  --color-warning-faint: var(--color-feedback-warning-faint);
+  --color-danger: var(--color-feedback-danger);
+  --color-danger-subtle: var(--color-feedback-danger-subtle);
+  --color-danger-faint: var(--color-feedback-danger-faint);
+  --color-info: var(--color-feedback-info);
+  --color-info-subtle: var(--color-feedback-info-subtle);
+  --color-header: var(--color-header-background);
+  --color-header-border: var(--color-header-border);
+  --color-nav: var(--color-navigation-background);
+  --color-nav-text: var(--color-navigation-text);
+  --color-nav-muted: var(--color-navigation-text-muted);
+  --color-nav-secondary: var(--color-navigation-text-secondary);
+  --color-nav-hover: var(--color-navigation-hover);
+  --color-nav-active: var(--color-navigation-active);
+  --color-focus: var(--focus-ring-color);
+
+  --font-body: var(--font-sans);
+  --font-brand: var(--font-display);
+
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-md);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+  --text-2xl: var(--font-size-2xl);
+  --text-3xl: var(--font-size-3xl);
+
+  --radius-control: var(--radius-sm);
+  --radius-card: var(--radius-md);
+  --radius-panel: var(--radius-lg);
+  --radius-badge: var(--radius-pill);
+  --radius-circle: var(--radius-circle);
+
+  --shadow-card-elevation: var(--shadow-card);
+  --shadow-popup-elevation: var(--shadow-popup);
+
+  --leading-tight: var(--line-height-tight);
+  --leading-normal: var(--line-height-normal);
+
+  --font-weight-light: var(--font-weight-light);
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-medium: var(--font-weight-medium);
+  --font-weight-semibold: var(--font-weight-semibold);
+  --font-weight-bold: var(--font-weight-bold);
+
+  --spacing: var(--space-1);
+}
