@@ -532,6 +532,12 @@
   background: var(--color-action-primary-muted);
 }
 
+/* Warning toasts use a dark semantic surface, so their text must be inverse. */
+.dx-toast-warning {
+  background-color: var(--color-feedback-warning);
+  color: var(--color-text-inverse);
+}
+
 /* Progress / load indication */
 .dx-progressbar-range {
   background: var(--color-action-primary);
