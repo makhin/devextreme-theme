@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { generateThemeMetadata } from './theme-metadata.mjs';
 
-const tokens = await readFile(new URL('../src/tokens.css', import.meta.url), 'utf8');
+const tokens = await readFile(new URL(import.meta.resolve('@smbc/theme/tokens.css')), 'utf8');
 const metadata = JSON.parse(await readFile(new URL('../theme/smbc-theme.metadata.json', import.meta.url), 'utf8'));
 const withPrimary = value => tokens.replace(/--color-action-primary:[^;]+;/, `--color-action-primary: ${value};`);
 const generate = css => generateThemeMetadata(css, metadata, '26.1.4');

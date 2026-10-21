@@ -1,7 +1,7 @@
 {
   "name": "@smbc/devextreme-theme",
-  "version": "0.1.0",
-  "description": "Internal SMBC DevExtreme theme, semantic tokens and corporate assets",
+  "version": "0.2.0",
+  "description": "SMBC DevExtreme theme adapter",
   "private": false,
   "type": "module",
   "license": "UNLICENSED",
@@ -15,26 +15,13 @@
     "**/*.css"
   ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
     "./styles.css": "./dist/styles.css",
-    "./tokens.css": "./dist/tokens.css",
     "./devextreme.css": "./dist/dx.smbc.css",
     "./overrides.css": "./dist/overrides.css",
-    "./fonts.css": "./dist/fonts.css",
     "./viz": {
       "types": "./dist/viz.d.ts",
       "import": "./dist/viz.js"
-    },
-    "./assets": {
-      "types": "./dist/assets.d.ts",
-      "import": "./dist/assets.js"
-    },
-    "./assets/smbc-logo.svg": "./dist/assets/smbc-logo.svg",
-    "./assets/favicon.ico": "./dist/assets/favicon.ico",
-    "./tailwind.css": "./dist/tailwind.css"
+    }
   },
   "scripts": {
     "theme:build": "node scripts/build-theme.mjs",
@@ -45,13 +32,15 @@
     "prepublishOnly": "node scripts/check-publish.mjs",
     "test:package": "npm run build && node scripts/test-theme-package.mjs",
     "test": "npm run check",
-    "test:tokens": "node --test scripts/theme-metadata.test.mjs scripts/tailwind-bridge.test.mjs",
+    "test:tokens": "node --test scripts/theme-metadata.test.mjs",
     "check": "npm run test:tokens && npm run build && node scripts/pack-check.mjs && node scripts/test-theme-package.mjs"
   },
   "peerDependencies": {
+    "@smbc/theme": "0.1.0",
     "devextreme": "~26.1.4"
   },
   "devDependencies": {
+    "@smbc/theme": "file:../smbc-theme/smbc-theme-0.1.0.tgz",
     "devextreme": "26.1.4",
     "devextreme-themebuilder": "26.1.4",
     "typescript": "6.0.2",

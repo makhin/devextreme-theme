@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'vite';
 import { runNpm } from './run-npm.mjs';
@@ -14,7 +14,9 @@ try {
     cwd: packageRoot, encoding: 'utf8',
   }));
   await writeFile(join(temp, 'package.json'), JSON.stringify({ private: true, type: 'module' }));
-  runNpm(['install', '--ignore-scripts', '--no-audit', '--no-fund', join(temp, pack.filename), 'devextreme@26.1.4'], {
+  const manifest = JSON.parse(await readFile(join(packageRoot, 'package.json'), 'utf8'));
+  const baseArchive = resolve(packageRoot, manifest.devDependencies['@smbc/theme'].slice(5));
+  runNpm(['install', '--ignore-scripts', '--no-audit', '--no-fund', join(temp, pack.filename), baseArchive, 'devextreme@26.1.4'], {
     cwd: temp, stdio: 'inherit',
   });
   await writeFile(join(temp, 'node-check.mjs'), `
@@ -23,9 +25,13 @@ import { access } from 'node:fs/promises';
 const { getPalette } = await import('devextreme/cjs/viz/palette.js');
 const originalPalette = structuredClone(getPalette('SMBC'));
 Object.defineProperty(globalThis, 'document', { configurable: true, get() { throw new Error('DOM accessed on import'); } });
-await import('@smbc/devextreme-theme');
-await access(new URL(import.meta.resolve('@smbc/devextreme-theme/tailwind.css')));
-const { smbcLogoUrl, smbcFaviconUrl } = await import('@smbc/devextreme-theme/assets');
+await assert.rejects(import('@smbc/devextreme-theme'), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
+for (const entry of ['tokens.css', 'fonts.css', 'tailwind.css', 'assets']) {
+  assert.throws(() => import.meta.resolve('@smbc/devextreme-theme/' + entry), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
+}
+await import('@smbc/theme');
+await access(new URL(import.meta.resolve('@smbc/theme/tailwind.css')));
+const { smbcLogoUrl, smbcFaviconUrl } = await import('@smbc/theme/assets');
 const { registerSmbcVizPalette, SMBC_VIZ_PALETTE_NAME } = await import('@smbc/devextreme-theme/viz');
 assert.deepEqual(getPalette('SMBC'), originalPalette, 'Import must not register a palette');
 await access(new URL(smbcLogoUrl));
@@ -45,9 +51,9 @@ console.log('Installed tarball: Node imports, asset URLs, palette registration a
   await writeFile(join(temp, 'index.html'), '<html><head></head><body class="dx-viewport"><script type="module" src="/main.js"></script></body></html>');
   await writeFile(join(temp, 'main.js'), `
 import '@smbc/devextreme-theme/styles.css';
-import { smbcLogoUrl, smbcFaviconUrl } from '@smbc/devextreme-theme/assets';
-import directLogo from '@smbc/devextreme-theme/assets/smbc-logo.svg';
-import directIcon from '@smbc/devextreme-theme/assets/favicon.ico';
+import { smbcLogoUrl, smbcFaviconUrl } from '@smbc/theme/assets';
+import directLogo from '@smbc/theme/assets/smbc-logo.svg';
+import directIcon from '@smbc/theme/assets/favicon.ico';
 import { registerSmbcVizPalette, SMBC_VIZ_PALETTE_NAME } from '@smbc/devextreme-theme/viz';
 import { getPalette } from 'devextreme/viz/palette';
 registerSmbcVizPalette();

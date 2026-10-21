@@ -1,4 +1,3 @@
-@import './fonts.css';
-@import './tokens.css';
+@import '@smbc/theme/styles.css';
 @import './dx.smbc.css';
 @import './overrides.css';

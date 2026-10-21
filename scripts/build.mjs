@@ -16,7 +16,6 @@ for (const file of await readdir(resolve(root, 'src'))) {
     await writeFile(resolve(dist, file), css.replace(/^@charset [^;]+;\s*/gm, ''));
   }
 }
-await cp(resolve(root, 'assets'), resolve(dist, 'assets'), { recursive: true });
 const icons = resolve(dirname(require.resolve('devextreme/package.json')), 'dist/css/icons');
 await mkdir(resolve(dist, 'assets/icons'), { recursive: true });
 for (const extension of ['woff2', 'woff', 'ttf']) {
